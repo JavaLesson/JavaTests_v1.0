@@ -16,4 +16,8 @@ public class AdminModel {
         session.flush();
         session.getTransaction().commit();
     }
+
+    public void delete(TestEntity testEntity){
+        session.delete(testEntity);
+    }
 }
