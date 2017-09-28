@@ -6,10 +6,7 @@ import JavaTest.TestEntity;
 import JavaTest.admin.model.AdminModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/admin")
@@ -28,5 +25,15 @@ public class AdminController {
         System.out.println("get Entity Data - " + testEntity.getData());
         System.out.println("get Entity TestId - " + testEntity.getTestId());*/
         adminModel.create(testEntity);
+    }
+    @RequestMapping(path = "/delete/{userId}",method = RequestMethod.DELETE)
+    @ResponseBody
+    public void createTest (@PathVariable ("userId") int userId){
+        TestEntity testEntity = new TestEntity();
+        testEntity.setTestId(userId);
+        /*System.out.println("get Entity Name - " + testEntity.getName());
+        System.out.println("get Entity Data - " + testEntity.getData());
+        System.out.println("get Entity TestId - " + testEntity.getTestId());*/
+        adminModel.delete(testEntity);
     }
 }

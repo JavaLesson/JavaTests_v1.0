@@ -7,12 +7,13 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class TutorModel {
-    public static final Session session = HibernateSessionFactory.getSessionFactory().openSession();
 
     public void update(TestEntity testEntity){
+        Session session = HibernateSessionFactory.start();
         session.beginTransaction();
         session.saveOrUpdate(testEntity);
         session.flush();
         session.getTransaction().commit();
+        session.close();
     }
 }

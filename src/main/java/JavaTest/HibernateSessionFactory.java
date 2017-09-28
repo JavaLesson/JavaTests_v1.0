@@ -1,6 +1,7 @@
 package JavaTest;
 
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
@@ -36,6 +37,10 @@ public class HibernateSessionFactory {
     public static void shutdown() {
         // Close caches and connection pools
         getSessionFactory().close();
+    }
+
+    public static Session start(){
+        return getSessionFactory().openSession();
     }
 
 }

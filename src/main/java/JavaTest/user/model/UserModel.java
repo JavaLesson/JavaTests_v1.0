@@ -7,13 +7,14 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class UserModel {
-    private static final Session session = HibernateSessionFactory.getSessionFactory().openSession();
 
     public TestEntity getTestData(int testId){
+        Session session = HibernateSessionFactory.start();
         session.beginTransaction();
         TestEntity testEntity = session.get(TestEntity.class, testId);
         session.flush();
         session.getTransaction().commit();
+        session.close();
         return testEntity;
     }
 }

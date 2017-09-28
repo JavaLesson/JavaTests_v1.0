@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import static org.junit.Assert.assertNotNull;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {Application.class})
 public class AdminModuleTest {
@@ -26,6 +28,7 @@ public class AdminModuleTest {
         if(testEntity.equals(userModel.getTestData(testEntity.getTestId()))){
             System.out.println("TEST IS SUCCESSFUL");
         }
+        assertNotNull(userModel.getTestData(testEntity.getTestId()));
         adminModel.delete(testEntity);
     }
 }
