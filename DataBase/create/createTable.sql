@@ -1,3 +1,9 @@
+-- MySQL Workbench Synchronization
+-- Generated: 2017-09-29 11:09
+-- Model: New Model
+-- Version: 1.0
+-- Project: Name of the project
+-- Author: User
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
@@ -28,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `JavaTests`.`Question` (
   INDEX `fk_Question_test1_idx` (`testId` ASC, `topicId` ASC),
   CONSTRAINT `fk_Question_test1`
     FOREIGN KEY (`testId` , `topicId`)
-    REFERENCES `JavaTests`.`test` (`testId` , `topicId`)
+    REFERENCES `JavaTests`.`Test` (`testId` , `topicId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -53,51 +59,51 @@ DEFAULT CHARACTER SET = utf8;
 CREATE TABLE IF NOT EXISTS `JavaTests`.`Literature` (
   `literatureId` INT(11) NOT NULL AUTO_INCREMENT,
   `description` VARCHAR(45) NOT NULL,
-  `Question_questionId` INT(11) NOT NULL,
+  `questionId` INT(11) NOT NULL,
   `testId` INT(11) NOT NULL,
   `topicId` INT(11) NOT NULL,
-  PRIMARY KEY (`literatureId`, `Question_questionId`, `testId`, `topicId`),
+  PRIMARY KEY (`literatureId`, `questionId`, `testId`, `topicId`),
   UNIQUE INDEX `literatureId_UNIQUE` (`literatureId` ASC),
-  INDEX `fk_Literature_Question1_idx` (`Question_questionId` ASC),
+  INDEX `fk_Literature_Question1_idx` (`questionId` ASC),
   INDEX `fk_Literature_test1_idx` (`testId` ASC),
   INDEX `fk_Literature_topic1_idx` (`topicId` ASC),
   CONSTRAINT `fk_Literature_Question1`
-    FOREIGN KEY (`Question_questionId`)
+    FOREIGN KEY (`questionId`)
     REFERENCES `JavaTests`.`Question` (`questionId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Literature_test1`
     FOREIGN KEY (`testId`)
-    REFERENCES `JavaTests`.`test` (`testId`)
+    REFERENCES `JavaTests`.`Test` (`testId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Literature_topic1`
     FOREIGN KEY (`topicId`)
-    REFERENCES `JavaTests`.`topic` (`topicId`)
+    REFERENCES `JavaTests`.`Topic` (`topicId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 CREATE TABLE IF NOT EXISTS `JavaTests`.`Link` (
-  `linksId` INT(11) NOT NULL AUTO_INCREMENT,
+  `linkId` INT(11) NOT NULL AUTO_INCREMENT,
   `link` VARCHAR(45) NULL DEFAULT NULL,
   `literatureId` INT(11) NOT NULL,
   `questionId` INT(11) NOT NULL,
   `testId` INT(11) NOT NULL,
   `topicId` INT(11) NOT NULL,
-  PRIMARY KEY (`linksId`, `literatureId`, `questionId`, `testId`, `topicId`),
-  UNIQUE INDEX `linksId_UNIQUE` (`linksId` ASC),
+  PRIMARY KEY (`linkId`, `literatureId`, `questionId`, `testId`, `topicId`),
+  UNIQUE INDEX `linksId_UNIQUE` (`linkId` ASC),
   INDEX `fk_Link_Literature1_idx` (`literatureId` ASC, `questionId` ASC, `testId` ASC, `topicId` ASC),
   CONSTRAINT `fk_Link_Literature1`
     FOREIGN KEY (`literatureId` , `questionId` , `testId` , `topicId`)
-    REFERENCES `JavaTests`.`Literature` (`literatureId` , `Question_questionId` , `testId` , `topicId`)
+    REFERENCES `JavaTests`.`Literature` (`literatureId` , `questionId` , `testId` , `topicId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
-CREATE TABLE IF NOT EXISTS `JavaTests`.`topic` (
+CREATE TABLE IF NOT EXISTS `JavaTests`.`Topic` (
   `topicId` INT(11) NOT NULL AUTO_INCREMENT,
   `description` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`topicId`),
@@ -105,7 +111,7 @@ CREATE TABLE IF NOT EXISTS `JavaTests`.`topic` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
-CREATE TABLE IF NOT EXISTS `JavaTests`.`test` (
+CREATE TABLE IF NOT EXISTS `JavaTests`.`Test` (
   `testId` INT(11) NOT NULL AUTO_INCREMENT,
   `description` VARCHAR(45) NULL DEFAULT NULL,
   `topicId` INT(11) NOT NULL,
@@ -114,7 +120,7 @@ CREATE TABLE IF NOT EXISTS `JavaTests`.`test` (
   INDEX `fk_test_topic1_idx` (`topicId` ASC),
   CONSTRAINT `fk_test_topic1`
     FOREIGN KEY (`topicId`)
-    REFERENCES `JavaTests`.`topic` (`topicId`)
+    REFERENCES `JavaTests`.`Topic` (`topicId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
