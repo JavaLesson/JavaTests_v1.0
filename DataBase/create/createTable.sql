@@ -17,6 +17,8 @@ CREATE TABLE IF NOT EXISTS `JavaTests`.`User` (
   `lastName` VARCHAR(100) NOT NULL,
   `login` VARCHAR(100) NOT NULL,
   `password` int(11) NOT NULL,
+  `tytor` TINYINT(1) NOT NULL,
+  `admin` TINYINT(1) NOT NULL,
   PRIMARY KEY (`userId`),
   UNIQUE INDEX `userId_UNIQUE` (`userId` ASC),
   UNIQUE INDEX `login_UNIQUE` (`login` ASC),
@@ -176,7 +178,7 @@ CREATE TABLE IF NOT EXISTS `JavaTests`.`Statistic` (
     ON UPDATE NO ACTION,
     CONSTRAINT `fk_userQuestionStatistic_test`
     FOREIGN KEY (`testId`)
-    REFERENCES `JavaTest`.`Test` (`testId`)
+    REFERENCES `JavaTests`.`Test` (`testId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
     CONSTRAINT `fk_userQuestionStatistic_topic`
