@@ -17,14 +17,14 @@ CREATE TABLE IF NOT EXISTS `JavaTests`.`User` (
   `lastName` VARCHAR(100) NOT NULL,
   `login` VARCHAR(100) NOT NULL,
   `password` int(11) NOT NULL,
-  `tytor` TINYINT(1) NOT NULL,
+  `tutor` TINYINT(1) NOT NULL,
   `admin` TINYINT(1) NOT NULL,
   PRIMARY KEY (`userId`),
   UNIQUE INDEX `userId_UNIQUE` (`userId` ASC),
   UNIQUE INDEX `login_UNIQUE` (`login` ASC),
   UNIQUE INDEX `password_UNIQUE` (`password` ASC))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+  ENGINE = InnoDB
+  DEFAULT CHARACTER SET = utf8;
 
 CREATE TABLE IF NOT EXISTS `JavaTests`.`Question` (
   `questionId` INT(11) NOT NULL AUTO_INCREMENT,
@@ -178,7 +178,7 @@ CREATE TABLE IF NOT EXISTS `JavaTests`.`Statistic` (
     ON UPDATE NO ACTION,
     CONSTRAINT `fk_userQuestionStatistic_test`
     FOREIGN KEY (`testId`)
-    REFERENCES `JavaTests`.`Test` (`testId`)
+    REFERENCES `JavaTest`.`Test` (`testId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
     CONSTRAINT `fk_userQuestionStatistic_topic`
