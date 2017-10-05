@@ -64,7 +64,7 @@ public class UserEntity {
     }
 
     @Basic
-    @Column(name = "tytor", nullable = false)
+    @Column(name = "tutor", nullable = false)
     public int getTytor() {
         return tytor;
     }

@@ -1,6 +1,6 @@
 package JavaTest.tutor.controller;
 
-import JavaTest.TestEntity;
+import JavaTest.entities.UserEntity;
 import JavaTest.tutor.model.TutorModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,9 +19,21 @@ public class TutorController {
         this.tutorModel = tutorModel;
     }
 
+    @RequestMapping(method = RequestMethod.PUT)
+    @ResponseBody
+    public void createUser(@RequestBody UserEntity userEntity){
+        tutorModel.create(userEntity);
+    }
+
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    public void updateTest (@RequestBody TestEntity testEntity){
-        tutorModel.update(testEntity);
+    public void updateUser(@RequestBody UserEntity userEntity){
+        tutorModel.update(userEntity);
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE)
+    @ResponseBody
+    public void deleteUser(@RequestBody UserEntity userEntity){
+        tutorModel.delete(userEntity);
     }
 }

@@ -1,38 +1,36 @@
-package JavaTest.controller.user;
+package JavaTest.controller.test;
 
 import JavaTest.HibernateSessionFactory;
-import JavaTest.entities.UserEntity;
+import JavaTest.entities.TestEntity;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ModelUser {
-
-    public void create(UserEntity userEntity){
+public class TestModel {
+    public void create(TestEntity testEntity){
         Session session = HibernateSessionFactory.start();
         session.beginTransaction();
-        session.save(userEntity);
+        session.save(testEntity);
         session.flush();
         session.getTransaction().commit();
         session.close();
     }
 
-    public void update(UserEntity userEntity){
+    public void update(TestEntity testEntity){
         Session session = HibernateSessionFactory.start();
         session.beginTransaction();
-        session.update(userEntity);
+        session.update(testEntity);
         session.flush();
         session.getTransaction().commit();
         session.close();
     }
 
-    public void delete(UserEntity userEntity){
+    public void delete(TestEntity testEntity){
         Session session = HibernateSessionFactory.start();
         session.beginTransaction();
-        session.delete(userEntity);
+        session.delete(testEntity);
         session.flush();
         session.getTransaction().commit();
         session.close();
     }
-
 }
