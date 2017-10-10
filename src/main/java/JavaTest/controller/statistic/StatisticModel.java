@@ -1,48 +1,40 @@
 package JavaTest.controller.statistic;
 
 import JavaTest.HibernateSessionFactory;
+import JavaTest.entities.QuestionEntity;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
-
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Repository
 public class StatisticModel {
 
-    public HashMap getStatistic(){
+    public List<QuestionEntity> getSimpleQuestions(){
         Session session = HibernateSessionFactory.start();
         session.beginTransaction();
-        String HQL_QUERY =
-                "select new map(questionId, sum(case when correct = 1 then 1 else 0 end) / count(questionId) * 100) "
-                + "from StatisticEntity group by questionId";
-        List<Map> list = session.createQuery(HQL_QUERY).list();
-        HashMap map = new HashMap<Integer, Long>();
-        for (Map m : list) {
-            map.put(m.get("0"), m.get("1"));
-        }
+        String SQL_QUERY = "SELECT * FROM javatests.question WHERE question.questionId IN (" +
+                "SELECT t1.questionId FROM (" +
+                "SELECT statistic.questionId, SUM(CASE WHEN correct = 1 THEN 1 ELSE 0 END ) / " +
+                "count(statistic.questionId) * 100 as stat FROM javatests.statistic GROUP BY statistic.questionId HAVING stat >= 80) as t1)";
+        List<QuestionEntity> list = session.createSQLQuery(SQL_QUERY).addEntity(QuestionEntity.class).list();
         session.flush();
         session.close();
 
-        return map;
-    }
-
-    public List getEasyQuestions(){
-        HashMap<Integer, Long> map = getStatistic();
-        List list = map.entrySet().stream().filter(entry -> entry.getValue() >= 80)
-                .map(entry -> entry.getKey()).collect(Collectors.toList());
-
         return list;
     }
 
-    public List getDifficultQuestions(){
-        HashMap<Integer, Long> map = getStatistic();
-        List list = map.entrySet().stream().filter(entry -> entry.getValue() <= 20)
-                .map(entry -> entry.getKey()).collect(Collectors.toList());
+    public List<QuestionEntity> getDifficultQuestions(){
+        Session session = HibernateSessionFactory.start();
+        session.beginTransaction();
+        String SQL_QUERY = "SELECT * FROM javatests.question WHERE question.questionId IN (" +
+                "SELECT t1.questionId FROM (" +
+                "SELECT statistic.questionId, SUM(CASE WHEN correct = 1 THEN 1 ELSE 0 END ) / " +
+                "count(statistic.questionId) * 100 as stat FROM javatests.statistic GROUP BY statistic.questionId HAVING stat <= 20) as t1)";
+        List<QuestionEntity> list = session.createSQLQuery(SQL_QUERY).addEntity(QuestionEntity.class).list();
+        session.flush();
+        session.close();
 
         return list;
     }
-
+    
 }

@@ -1,5 +1,6 @@
 package JavaTest.controller.statistic;
 
+import JavaTest.entities.QuestionEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,15 +18,15 @@ public class StatisticController {
         this.statisticModel = statisticModel;
     }
 
-    @RequestMapping(path = "geteasy", method = RequestMethod.GET)
+    @RequestMapping(path = "getSimple", method = RequestMethod.GET)
     @ResponseBody
-    public List getEasy(){
-        return statisticModel.getEasyQuestions();
+    public List<QuestionEntity> getSimple(){
+        return statisticModel.getSimpleQuestions();
     }
 
-    @RequestMapping(path = "getdifficult", method = RequestMethod.GET)
+    @RequestMapping(path = "getDifficult", method = RequestMethod.GET)
     @ResponseBody
-    public List getDifficult(){
+    public List<QuestionEntity> getDifficult(){
         return statisticModel.getDifficultQuestions();
     }
 
